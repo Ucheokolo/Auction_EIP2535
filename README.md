@@ -1,39 +1,56 @@
-[![Mentioned in Awesome Foundry](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/crisgarner/awesome-foundry)
-# Foundry + Hardhat Diamonds
+# Auction Contract EIP2535 Standard
 
-This is a mimimal template for [Diamonds](https://github.com/ethereum/EIPs/issues/2535) which allows facet selectors to be generated on the go in solidity tests!
+## Smart Contract Project @ WEB3BRIDGE
 
-## Installation
+### Contents
 
-- Clone this repo
-- Install dependencies
+- Overview EIP2535
+- Introduction to Auction
+- Snippets
+- Languages
+- Functions
 
-```bash
-$ yarn && forge update
-```
+### Overview
 
-### Compile
+Nick Mudge created the Diamond EIP in the Feb of 2020. By the Octoberof 2022, the proposal was finalized. The proposal standardizes diamonds, which are modular smart contract systems that can be upgraded/extended after deployment, and have virtually no size limit. In more clear terms, this means that you can add, remove or replace function in an already deployed contract. Its Structure is modularized into four parts;
 
-```bash
-$ npx hardhat compile
-```
+- The diamond which is basically the facade, takes in the diamondcut address and contract owner address as constructor inputs during deployment. it holds the state variables and a fallback fuction to the facet contracts.
+- The diamondcut; deployed first before the diamond and is used for the upgrades.
+- The diamondLoupe; Holds all facet contract addresses and their corresponding functions
+- The facets; stateless smart contracts that are deployed to blockchain and holds the functions that modifies the state of the diamond. The diamond Loupe and Ownership Facets fall under these.
+- diamondInit: contains an init function=> called on first diamond upgrade to initialize state of some state variables. This is optional.
 
-## Deployment
+For more information on EIP2535 [Diamond Contracts](https://www.info.diamonds/).
 
-### Hardhat
+### Introduction To Auction Contract
 
-```bash
-$ npx hardhat run scripts/deploy.js
-```
+This contract is created to enable limitless auction listing by anyone. Anyone is allowed to list an auction item for contract users to bid. When the set duration time for auction elapses, bidding for specific auction is disabled. Those who lost bid will have their bids returned to their wallets while the contract holds the winners bid and transfers the auctioned Item in exchange. Only contract owner or Auction creator can declare winner. There is a charge on each auction creator at listing. The test files and script file can be found in their folders respectively. Use [Auction Contract](https://louper.dev/diamond/0xa0C729824fd77932C90b5898957AfFBb1A18C246?network=sepolia), to access contract via louper website.
 
-### Foundry
+### Snippets
 
-```bash
-$ forge t
-```
+#### Contract snippet
 
-`Note`: A lot of improvements are still needed so contributions are welcome!!
+<img src="./images/contract code.png" alt="">
 
-Bonus: The [DiamondLoupefacet](contracts/facets/DiamondLoupeFacet.sol) uses an updated [LibDiamond](contracts/libraries//LibDiamond.sol) which utilises solidity custom errors to make debugging easier especially when upgrading diamonds. Take it for a spin!!
+#### Test Code
 
-Need some more clarity? message me [on twitter](https://twitter.com/Timidan_x), Or join the [EIP-2535 Diamonds Discord server](https://discord.gg/kQewPw2)
+<img src="./images/test snippet.png" alt="">
+
+#### Etherscan Verification
+
+<img src="./images/etherscan.png" alt="">
+
+#### Louper.dev UI for contract
+
+<img src="./images/loupe.png" alt="">
+
+### Language
+
+- Solidity
+
+### Function Interactions
+
+- BidForItem(uint256)
+- createAuction(address,string,uint256)
+- declareWinner(uint256)
+- getAuctionDetails(uint256)
