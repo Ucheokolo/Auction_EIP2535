@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 // import "../libraries/AppStorage.sol";
-import "../libraries/libAuction.sol";
+// import "../libraries/libAuction.sol";
+import "../../contracts/libraries/LibAuction.sol";
 
 contract AuctionFacet {
     function getNumberExistingAuction()
